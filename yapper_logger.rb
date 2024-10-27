@@ -8,30 +8,62 @@ before do
   response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
 end
 
+# ANSI color codes
+LOG_COLORS = {
+  'log' => "\e[32m",      
+  'warn' => "\e[33m",     
+  'error' => "\e[31m",    
+  'info' => "\e[34m",     
+  'table' => "\e[36m",    
+  'clear' => "\e[35m"     
+}
+RESET_COLOR = "\e[0m"     
+
 options '*' do
- 200
+  200
 end
 
 post '/log' do
   content_type :json
-  request_data = JSON.parse(request.body.read)
 
-  type =  request_data['type']
-  message = request_data['message']
-  source = request_data['source']
+  if request.body.size > 0
+    request_data = JSON.parse(request.body.read)
 
-  log_message = "[#{type.upcase}] #{source}: #{message}"
-
-  case type
-  when 'log'
-    puts log_message
-  when 'warn'
-    warn log_message
-  when 'error'
-    $stderr.puts log_message
-  else
-    puts log_message
+    type =  request_data['type']
+    message = request_data['message']
+    source = request_data['source']
+  
+    log_message = "[#{type.upcase}] #{source}: #{message}: #{message.kind_of?(Array)}"
+  
+    # apply color based on log type
+    colored_message = "#{LOG_COLORS[type] || RESET_COLOR}#{log_message}#{RESET_COLOR}"
+  
+    case type
+    when 'log'
+      puts colored_message
+    when 'warn'
+      warn colored_message
+    when 'error'
+      $stderr.puts colored_message
+    when 'table'
+      puts colored_message
+    else
+      puts colored_message
+    end
   end
 
-  {status: 'ok'}.to_json
+  { status: 'ok' }.to_json
+end
+
+post '/clear' do
+  content_type :json
+  if Gem.win_platform?
+    system('cls')
+  else
+    system('clear')
+  end
+
+  clear_message = "#{LOG_COLORS['clear']}[CLEAR] Console cleared by /clear route#{RESET_COLOR}"
+  puts clear_message
+  { status: 'console cleared' }.to_json
 end
