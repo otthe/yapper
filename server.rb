@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'sinatra'
 require 'json'
 
@@ -10,12 +12,12 @@ end
 
 # ANSI color codes
 LOG_COLORS = {
-  'log' => "\e[32m",      
-  'warn' => "\e[33m",     
-  'error' => "\e[31m",    
-  'info' => "\e[34m",     
-  'table' => "\e[36m",    
-  'clear' => "\e[35m"     
+  'log' => "\e[42m", #32m    
+  'warn' => "\e[43m",#33m
+  'error' => "\e[41m",#31m    
+  'info' => "\e[44m",#34m     
+  'table' => "\e[46m",#36m    
+  'clear' => "\e[45m"#35m     
 }
 RESET_COLOR = "\e[0m"     
 
@@ -66,7 +68,7 @@ post '/clear' do
     system('clear')
   end
 
-  clear_message = "#{LOG_COLORS['clear']}[CLEAR] Console cleared by /clear route#{RESET_COLOR}"
+  clear_message = "#{LOG_COLORS['clear']}[CLEAR] Console cleared after yapper restart!#{RESET_COLOR}"
   puts clear_message
   { status: 'console cleared' }.to_json
 end

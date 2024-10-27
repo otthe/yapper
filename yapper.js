@@ -1,6 +1,6 @@
 
 /*
-  Include this file on top of your popup.html or add some conditional logic to only run this on dev mode
+  Include this file on top of your popup.html / whatever
   also make sure that the logger server is running, or you will get spammed with errors
 */
 
