@@ -13,7 +13,7 @@ ruby server.js    #or make it executable
 <script src="other.js"></script>
 ...
 ```
-3. If using example.html you should see the following:<br>
+3. If using example.html, you should see the following:<br>
 ![alt text](example/cli.png)
 
 ## Things to consider
