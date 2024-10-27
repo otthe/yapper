@@ -1,7 +1,7 @@
 
 /*
-  Include this file on top of your popup.html
-  make sure that server is on, or you will get spammed with errors
+  Include this file on top of your popup.html or add some conditional logic to only run this on dev mode
+  also make sure that the logger server is running, or you will get spammed with errors
 */
 
 const LOG_SERVER_URL = 'http://localhost:3000/log';

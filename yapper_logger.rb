@@ -32,9 +32,12 @@ post '/log' do
     type =  request_data['type']
     message = request_data['message']
     source = request_data['source']
-  
-    log_message = "[#{type.upcase}] #{source}: #{message}: #{message.kind_of?(Array)}"
-  
+
+    #TODO: add some custom logic to display table data in more structured manner?
+    #{message.kind_of?(Array)
+
+    log_message = "[#{type.upcase}] #{source}: #{message}}"
+
     # apply color based on log type
     colored_message = "#{LOG_COLORS[type] || RESET_COLOR}#{log_message}#{RESET_COLOR}"
   
